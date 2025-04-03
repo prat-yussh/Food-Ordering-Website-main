@@ -5,7 +5,23 @@ const cookieParser = require("cookie-parser");
 const ejs = require("ejs");
 const fileUpload = require("express-fileupload");
 const { v4: uuidv4 } = require("uuid");
-const mysql = require("mysql");
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: process.env.MYSQLHOST,       // Railway provides this
+  user: process.env.MYSQLUSER,       // Railway provides this
+  password: process.env.MYSQLPASSWORD, // Railway provides this
+  database: process.env.MYSQLDATABASE, // Railway provides this
+  port: process.env.MYSQLPORT        // Railway provides this
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('Connected to the MySQL database!');
+});
 
 // Initialize Express App
 const app = express();
